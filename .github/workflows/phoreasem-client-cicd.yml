@@ -1,8 +1,16 @@
-- name: executing remote ssh commands using password
-  uses: appleboy/ssh-action@master
-  with:
-    host: ${{ secrets.HOST }}
-    username: ${{ secrets.USERNAME }}
-    password: ${{ secrets.PASSWORD }}
-    port: ${{ secrets.PORT }}
-    script: whoami
+name: executing remote ssh commands using password
+on: 
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
