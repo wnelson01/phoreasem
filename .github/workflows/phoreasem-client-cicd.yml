@@ -14,5 +14,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd ~/projects/phoreasem
-            ls -pla
+            cd ~/projects/phoreasem/phoreasem-client
+            git pull
+            npm run build
