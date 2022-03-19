@@ -1,6 +1,6 @@
 # ignore ALL .log files
 *.log
 .env
-.venv
-__pychace__/
+*/.venv
+*/__pychace__/
 
