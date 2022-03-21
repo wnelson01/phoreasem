@@ -32,7 +32,7 @@ cur = conn.cursor()
 
 @app.route('/', methods=['GET'])
 def index():
-    return "<h1 style='color:blue'>Hello There!</h1>"
+    return "<h1 style='color:blue'>Phoreasem API</h1>"
 
 # create person
 @app.route('/person', methods=['POST'])
@@ -40,7 +40,7 @@ def create_person():
     content = request.get_json()
     app.logger.debug(content)
     name = content['name']
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
     try:
         cur.execute("INSERT INTO person (name) VALUES (?)", (name,))
     except mariadb.Error as e:
@@ -57,16 +57,35 @@ def create_person():
 @app.route('/person', methods=['GET'])
 def get_person():
     args = request.args
+    id = args.get('id')
     name = args.get('name')
-    app.logger.debug(f'name: {name}')
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
     try:
-        cur.execute('SELECT * FROM person')
+        if id:
+            cur.execute('SELECT * FROM person WHERE id = ?', (id,))
+        elif name:
+            cur.execute('SELECT * FROM person WHERE name = ?', (name,))
+        else:
+            cur.execute('SELECT * FROM person')
     except mariadb.Error as e:
         app.logger.error(e)
     rv = cur.fetchall()
     cur.close()
     return jsonify(rv)
+
+# update person
+@app.route('/person/<id>', methods=['PATCH'])
+def update_person(id):
+    content = request.get_json()
+    name = content['name']
+    cur = conn.cursor(dictionary = True)
+    cur.execute('UPDATE person SET name = ? WHERE id = ?', (name, id,))
+    conn.commit()
+    rv = {
+            'name': name,
+    }
+    cur.close()
+    return rv
 
 
 if __name__ == "__main__":
