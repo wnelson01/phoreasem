@@ -53,5 +53,21 @@ def create_person():
     cur.close()
     return(rv)
 
+# get people
+@app.route('/person', methods=['GET'])
+def get_person():
+    args = request.args
+    name = args.get('name')
+    app.logger.debug(f'name: {name}')
+    cur = conn.cursor()
+    try:
+        cur.execute('SELECT * FROM person')
+    except mariadb.Error as e:
+        app.logger.error(e)
+    rv = cur.fetchall()
+    cur.close()
+    return jsonify(rv)
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
