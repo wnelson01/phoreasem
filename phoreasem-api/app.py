@@ -165,5 +165,22 @@ def delete_team(id):
     cur.close()
     return make_response('', 204)
 
+# create membership
+@app.route('/membership', methods=['POST'])
+def create_membership():
+    content = request.get_json()
+    team = content['team']
+    person = content['person']
+    cur = conn.cursor(dictionary = True)
+    cur.execute('INSERT INTO membership (team, person) VALUES (?, ?)', (team, person,))
+    conn.commit()
+    rv = {
+            'id': cur.lastrowid,
+            'team': team,
+            'person': person
+    }
+    cur.close()
+    return rv
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
