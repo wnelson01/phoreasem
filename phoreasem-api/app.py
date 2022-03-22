@@ -59,7 +59,7 @@ def get_person():
     args = request.args
     id = args.get('id')
     name = args.get('name')
-    cur = conn.cursor(dictionary=True)
+    cur = conn.cursor(dictionary = True)
     try:
         if id:
             cur.execute('SELECT * FROM person WHERE id = ?', (id,))
@@ -86,6 +86,19 @@ def update_person(id):
     }
     cur.close()
     return rv
+
+# delete person
+@app.route('/person/<id>', methods=['DELETE'])
+def delete_person(id):
+    cur = conn.cursor(dictionary = True)
+    cur.execute('DELETE FROM membership WHERE person = ?', (id,))
+    conn.commit()
+    cur.execute('UPDATE post SET person = NULL WHERE person = ?', (id,))
+    conn.commit()
+    cur.execute('DELETE FROM person WHERE id = ?', (id,))
+    conn.commit()
+    cur.close()
+    return make_response('', 204)
 
 
 if __name__ == "__main__":
