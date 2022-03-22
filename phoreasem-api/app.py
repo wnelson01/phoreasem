@@ -1,6 +1,6 @@
 # from flask import Flask, request, make_response, render_template, jsonify
-import flask
-from flask import request, jsonify, make_response, render_template
+# import flask
+from flask import Flask, request, jsonify, make_response, render_template
 from dotenv import load_dotenv
 import mariadb
 import sys
@@ -9,7 +9,7 @@ import logging
 
 load_dotenv()                                               # take environment variables from .env.
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 app.config["DEBUG"] = True
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
@@ -82,7 +82,7 @@ def update_person(id):
     cur.execute('UPDATE person SET name = ? WHERE id = ?', (name, id,))
     conn.commit()
     rv = {
-            'name': name,
+            'name': name
     }
     cur.close()
     return rv
@@ -137,6 +137,33 @@ def get_team():
     rv = cur.fetchall()
     cur.close()
     return jsonify(rv)
+
+# update team
+@app.route('/team/<id>', methods=['PATCH'])
+def update_team(id):
+    content = request.get_json()
+    name = content['name']
+    cur = conn.cursor(dictionary = True)
+    cur.execute('UPDATE team SET name = ? WHERE id = ?', (name, id,))
+    conn.commit()
+    rv = {
+            'name': name
+    }
+    cur.close()
+    return rv
+
+# delete team
+@app.route('/team/<id>', methods=['DELETE'])
+def delete_team(id):
+    cur = conn.cursor(dictionary = True)
+    cur.execute('DELETE FROM membership WHERE team = ?', (id,))
+    conn.commit()
+    cur.execute('DELETE FROM post WHERE team = ?', (id,))
+    conn.commit()
+    cur.execute('DELETE FROM team WHERE id = ?', (id,))
+    conn.commit()
+    cur.close()
+    return make_response('', 204)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
