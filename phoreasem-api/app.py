@@ -38,7 +38,6 @@ def index():
 @app.route('/person', methods=['POST'])
 def create_person():
     content = request.get_json()
-    app.logger.debug(content)
     name = content['name']
     cur = conn.cursor(dictionary=True)
     try:
@@ -64,6 +63,7 @@ def get_person():
         if id:
             cur.execute('SELECT * FROM person WHERE id = ?', (id,))
         elif name:
+            ap.logger.debug(args)
             cur.execute('SELECT * FROM person WHERE name = ?', (name,))
         else:
             cur.execute('SELECT * FROM person')
@@ -100,6 +100,43 @@ def delete_person(id):
     cur.close()
     return make_response('', 204)
 
+# create team
+@app.route('/team', methods=['POST']) 
+def create_team():
+    content = request.get_json()
+    name = content['name']
+    cur = conn.cursor(dictionary = True)
+    try:
+        cur.execute('INSERT INTO team (name) VALUES (?)', (name,))
+    except mariadb.Error as e:
+        app.logger.error(e)
+    conn.commit()
+    rv = {
+            'id': cur.lastrowid,
+            'name': name
+    }
+    cur.close()
+    return(rv)
+
+# get team
+@app.route('/team', methods=['GET'])
+def get_team():
+    args = request.args
+    id = args.get('id')
+    name = args.get('name')
+    cur = conn.cursor(dictionary = True)
+    try:
+        if id:
+            cur.execute('SELECT * FROM team WHERE id = ?', (id,))
+        elif name:
+            cur.execute('SELECT * FROM team WHERE name = ?', (name,))
+        else:
+            cur.execute('SELECT * FROM team')
+    except mariadb.Error as e:
+        app.logger.error(e)
+    rv = cur.fetchall()
+    cur.close()
+    return jsonify(rv)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
