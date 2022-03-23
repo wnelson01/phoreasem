@@ -182,5 +182,29 @@ def create_membership():
     cur.close()
     return rv
 
+# get membership
+@app.route('/membership', methods=['GET'])
+def get_membership():
+    args = request.args
+    id = args.get('id')
+    team = args.get('team')
+    person = args.get('person')
+    cur = conn.cursor(dictionary = True)
+    try:
+        if id:
+            cur.execute('SELECT m.id as membership_id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id WHERE m.id = ?', (id,))
+        elif team:
+            cur.execute('SELECT * FROM membership WHERE team = ?', (team,))
+        elif person:
+            cur.execute('SELECT * FROM membership WHERE person = ?', (person,))
+        else:
+            cur.execute('SELECT m.id as membership_id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id')
+    except mariadb.Error as e:
+        app.logger.error(e)
+    rv = cur.fetchall()
+    cur.close()
+    return jsonify(rv)
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
