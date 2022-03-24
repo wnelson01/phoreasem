@@ -1,5 +1,3 @@
-# from flask import Flask, request, make_response, render_template, jsonify
-# import flask
 from flask import Flask, request, jsonify, make_response, render_template
 from dotenv import load_dotenv
 import mariadb
@@ -27,8 +25,6 @@ try:
         )
 except mariadb.Error as e:
     app.logger.error(e)
-
-cur = conn.cursor()
 
 @app.route('/', methods=['GET'])
 def index():
@@ -63,7 +59,6 @@ def get_person():
         if id:
             cur.execute('SELECT * FROM person WHERE id = ?', (id,))
         elif name:
-            ap.logger.debug(args)
             cur.execute('SELECT * FROM person WHERE name = ?', (name,))
         else:
             cur.execute('SELECT * FROM person')
@@ -194,9 +189,9 @@ def get_membership():
         if id:
             cur.execute('SELECT m.id as membership_id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id WHERE m.id = ?', (id,))
         elif team:
-            cur.execute('SELECT * FROM membership WHERE team = ?', (team,))
+            cur.execute('SELECT p.name as person FROM membership m JOIN person p ON m.person = p.id WHERE team = ?', (team,))
         elif person:
-            cur.execute('SELECT * FROM membership WHERE person = ?', (person,))
+            cur.execute('SELECT t.name as team FROM membership m JOIN team t ON m.team = t.id WHERE person = ?', (person,))
         else:
             cur.execute('SELECT m.id as membership_id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id')
     except mariadb.Error as e:
@@ -205,6 +200,39 @@ def get_membership():
     cur.close()
     return jsonify(rv)
 
+# delete membership
+@app.route('/membership/<id>', methods=['DELETE'])
+def delete_membership(id):
+    cur = conn.cursor(dictionary = True)
+    cur.execute('DELETE FROM membership WHERE id = ?', (id,))
+    conn.commit()
+    cur.close()
+    return make_response('', 204)
+
+@app.route('/post', methods=['POST'])
+def create_post():
+    content = request.get_json()
+    person = content['person']
+    team = content['team']
+    post_content = content['content']
+    response_to = content.get('post', None)
+    cur = conn.cursor(dictionary = True)
+    cur.execute('INSERT INTO post (person, team, content, post) VALUES (?, ?, ?, ?)', (person, team, post_content, response_to))
+    conn.commit()
+    rv = {
+            'id': cur.lastrowid,
+            'person': person,
+            'team': team,
+            'content': post_content,
+            'post': response_to
+    }
+    cur.close()
+    return rv
+
+@app.route('/push', methods=['POST'])
+def push_test():
+    app.logger.debug(request.get_json())
+    return(request.get_json())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
