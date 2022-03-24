@@ -10,7 +10,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
 	<ChakraProvider>
-		<Box h='100vh' w=100vw'>
+		<Box h='100vh' w='100vw'>
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<App />}>
