@@ -229,6 +229,27 @@ def create_post():
     cur.close()
     return rv
 
+@app.route('/post', methods=['GET'])
+def get_post():
+    args = request.args
+    team = args.get('team')
+    person = args.get('person')
+    cur = conn.cursor(dictionary = True)
+    if team:
+        cur.execute('SELECT po.id as post_id, po.content as post_content, pe.name as person_name FROM post po \
+                JOIN person pe ON po.person = pe.id WHERE po.team = ? OR po.team = (SELECT t.id FROM team t WHERE t.name = ?)', (team, team))
+    elif person:
+        cur.execute('SELECT po.id as post_id, po.content as post_content, t.name as team_name FROM post po \
+                JOIN team t ON po.team = t.id \
+                WHERE po.person = ? \
+                OR po.person = \
+                (SELECT p.id FROM person p WHERE p.name = ?)', (person, person))
+    else:
+        cur.execute('SELECT * FROM post')
+    rv = cur.fetchall()
+    cur.close()
+    return jsonify(rv)
+
 @app.route('/push', methods=['POST'])
 def push_test():
     app.logger.debug(request.get_json())
