@@ -4,9 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ChakraProvider, Box } from '@chakra-ui/react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+	<ChakraProvider>
+		<Box h='100vh' w=100vw'>
+			<BrowserRouter>
+				<Routes>
+					<Route path='/' element={<App />}>
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</Box>
+	</ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
