@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PersonPage from './pages/PersonPage';
 import TeamPage from './pages/TeamPage';
 import PostPage from './pages/PostPage';

@@ -29,7 +29,7 @@ const Layout = () => {
             boxShadow={"md"}
             orientation="vertical"
           ></Divider>
-          <Box textAslign="left" w={{ md: "container.lg" }} overflow="auto">
+          <Box textAlign="left" w={{ md: "container.lg" }} overflow="auto">
             <Outlet />
           </Box>
         </Stack>
