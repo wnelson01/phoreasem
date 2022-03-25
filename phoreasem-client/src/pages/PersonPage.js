@@ -25,9 +25,9 @@ import PersonTable from '../components/person/PersonTable';
 
 const PersonPage = () => {
   const [people, setPeople] = useState([]);
-  const [teams, setTeams] = useState();
+  // const [teams, setTeams] = useState();
   const [filteredPeople, setFilteredPeople] = useState([]);
-  const [personToEdit, setPersonToEdit] = useState({});
+  // const [personToEdit, setPersonToEdit] = useState({});
   const {
     isOpen: isCreateOpen,
     onOpen: onCreateOpen,
@@ -51,9 +51,9 @@ const PersonPage = () => {
     setFilteredPeople(people)
   }, [people]);
 
-  const onEdit = (person) => {
-    setPersonToEdit(person);
-  };
+  // const onEdit = (person) => {
+  //   setPersonToEdit(person);
+  // };
   return (
     <Container minW="container.sm" maxW="container.xl">
       <Heading p="2" as="h2" size="xl">
@@ -66,7 +66,7 @@ const PersonPage = () => {
         <Spacer />
         {/* <TableSearch rows={people} filteredRows={filteredPeople} setFilteredRows={setFilteredPeople} /> */}
       </Flex>
-      <PersonTable people={filteredPeople} onEdit={onEdit} loadPeople={loadPeople} />
+      <PersonTable people={filteredPeople} loadPeople={loadPeople} />
       <Modal size="4xl" isOpen={isCreateOpen} onClose={onCreateClose}>
         <ModalOverlay />
         <ModalContent>
