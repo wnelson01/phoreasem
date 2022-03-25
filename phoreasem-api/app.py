@@ -169,7 +169,7 @@ def create_membership():
     team = content['team']
     person = content['person']
     cur = conn.cursor(dictionary = True)
-    cur.execute('INSERT INTO membership (team, person) VALUES (?, ?)', (team, person,))
+    cur.execute('INSERT INTO membership (team, person) VALUES ((SELECT t.id FROM team t WHERE t.name = ?), (SELECT p.id FROM person p WHERE p.name = ?))', (team, person,))
     conn.commit()
     rv = {
             'id': cur.lastrowid,
