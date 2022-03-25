@@ -29,15 +29,11 @@ const PersonPage = () => {
   const [filteredPeople, setFilteredPeople] = useState([]);
   // const [personToEdit, setPersonToEdit] = useState({});
   const {
-    isOpen: isCreateOpen,
-    onOpen: onCreateOpen,
-    onClose: onCreateClose,
+    isOpen,
+    onOpen,
+    onClose,
   } = useDisclosure();
-  const {
-    isOpen: isEditOpen,
-    onOpen: onEditOpen,
-    onClose: onEditClose,
-  } = useDisclosure();
+
   const loadPeople = async () => {
     const response = await axios.get("https://api.phoreasem.app/person");
     setPeople(response.data);
@@ -60,14 +56,14 @@ const PersonPage = () => {
         people
       </Heading>
       <Flex>
-        <Button marginLeft="4" onClick={onCreateOpen}>
+        <Button marginLeft="4" onClick={onOpen}>
           new person
         </Button>
         <Spacer />
         {/* <TableSearch rows={people} filteredRows={filteredPeople} setFilteredRows={setFilteredPeople} /> */}
       </Flex>
       <PersonTable people={filteredPeople} loadPeople={loadPeople} />
-      <Modal size="4xl" isOpen={isCreateOpen} onClose={onCreateClose}>
+      <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create Person</ModalHeader>

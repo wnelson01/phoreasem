@@ -8,7 +8,7 @@ import {
   HStack,
   Link,
   Button,
-  Flex
+  Flex,
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
@@ -16,11 +16,11 @@ import Sidebar from "./Sidebar";
 const Layout = () => {
   return (
     <Box
-      m={2}
+      // m={2}
       paddingLeft={{ base: "0", md: "100" }}
       paddingRight={{ base: "0", md: "100" }}
-      w='min-content'
-      alignSelf='center'
+      // w='min-content'
+      // alignSelf='center'
     >
       <VStack>
         {/* <HStack w='full' align='start'>
@@ -41,7 +41,7 @@ const Layout = () => {
               top="0"
               position={{ base: "sticky", md: "relative " }}
               zIndex="1"
-              // boxShadow={{ base: "md", md: "none" }}
+              boxShadow={{ base: "md", md: "none" }}
               h={{ md: "100vh" }}
             >
               <Sidebar />
@@ -52,7 +52,7 @@ const Layout = () => {
               boxShadow={"md"}
               orientation="vertical"
             ></Divider>
-            <Box textAlign="left" w={{ md: "container.lg" }} overflow="auto" >
+            <Box textAlign="left" w={{ md: "container.lg" }} overflow="auto">
               <Outlet />
             </Box>
           </Stack>

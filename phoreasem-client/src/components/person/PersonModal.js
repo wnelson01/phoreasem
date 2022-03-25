@@ -32,7 +32,9 @@ const PersonModal = ({ person, isOpen, onClose }) => {
               <TabPanel>
                 {/* <UpdatePersonPanel></UpdatePersonPanel> */}
               </TabPanel>
-              <TabPanel>{/* <MembershipPanel></MembershipPanel> */}</TabPanel>
+              <TabPanel>
+                {/* <MembershipPanel></MembershipPanel> */}
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </ModalBody>
