@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, make_response, render_template
+from flask_cors import CORS
 from dotenv import load_dotenv
 import mariadb
 import sys
@@ -9,6 +10,7 @@ load_dotenv()                                               # take environment v
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+CORS(app)
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
