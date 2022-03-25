@@ -191,9 +191,9 @@ def get_membership():
         if id:
             cur.execute('SELECT m.id as membership_id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id WHERE m.id = ?', (id,))
         elif team:
-            cur.execute('SELECT p.name as person FROM membership m JOIN person p ON m.person = p.id WHERE team = ?', (team,))
+            cur.execute('SELECT p.name as person FROM membership m JOIN person p ON m.person = p.id JOIN team t ON t.id = m.team WHERE t.name = ?', (team,))
         elif person:
-            cur.execute('SELECT t.name as team FROM membership m JOIN team t ON m.team = t.id WHERE person = ?', (person,))
+            cur.execute('SELECT t.name as team FROM membership m JOIN team t ON m.team = t.id JOIN person p ON p.id = m.person WHERE p.name = ?', (person,))
         else:
             cur.execute('SELECT m.id as membership_id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id')
     except mariadb.Error as e:
