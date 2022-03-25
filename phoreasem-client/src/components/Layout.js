@@ -16,19 +16,22 @@ import Sidebar from "./Sidebar";
 const Layout = () => {
   return (
     <Box
+      m={2}
       paddingLeft={{ base: "0", md: "100" }}
       paddingRight={{ base: "0", md: "100" }}
+      w='min-content'
+      alignSelf='center'
     >
       <VStack>
-        <HStack w='full' align='start'>
+        {/* <HStack w='full' align='start'>
           <Link>
-            <Button>Admin</Button>
+            <Button >Admin View</Button>
           </Link>
           <Link>
-            <Button>Person</Button>
+            <Button>Person View</Button>
           </Link>
         </HStack>
-        <Divider orientation='horizontal'></Divider>
+        <Divider orientation='horizontal' boxShadow='2xl'></Divider> */}
         <Center>
           <Stack maxW="100vw" direction={{ base: "column", md: "row" }}>
             <Box
@@ -38,7 +41,7 @@ const Layout = () => {
               top="0"
               position={{ base: "sticky", md: "relative " }}
               zIndex="1"
-              boxShadow={{ base: "md", md: "none" }}
+              // boxShadow={{ base: "md", md: "none" }}
               h={{ md: "100vh" }}
             >
               <Sidebar />
@@ -49,7 +52,7 @@ const Layout = () => {
               boxShadow={"md"}
               orientation="vertical"
             ></Divider>
-            <Box textAlign="left" w={{ md: "container.lg" }} overflow="auto">
+            <Box textAlign="left" w={{ md: "container.lg" }} overflow="auto" >
               <Outlet />
             </Box>
           </Stack>

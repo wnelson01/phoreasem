@@ -4,13 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { ChakraProvider, Box } from "@chakra-ui/react";
+import { ChakraProvider, Box, Center } from "@chakra-ui/react";
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
       <Box h="100vh" w="100vw">
-		<App />
+        <Center>
+          <App />
+        </Center>
       </Box>
     </ChakraProvider>
   </React.StrictMode>,
