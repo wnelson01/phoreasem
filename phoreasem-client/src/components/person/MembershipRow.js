@@ -1,10 +1,13 @@
 import React from 'react'
 import { Tr, Td, Text, CloseButton } from '@chakra-ui/react';
+import axios from 'axios';
 
 const MembershipRow = ({ membership }) => {
+
   const deleteMembership = async () => {
-    console.log('delete membership');
+    await axios.delete(`https://api.phoreasem.app/membership/${membership.membership_id}`);
   }
+
   return (
     <Tr>
       <Td maxW='100%'>

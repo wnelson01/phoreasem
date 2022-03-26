@@ -14,6 +14,7 @@ import {
   Tabs,
   Text
 } from "@chakra-ui/react";
+import MembershipPanel from './MembershipPanel';
 
 const PersonModal = ({ person, isOpen, onClose }) => {
   return (
@@ -33,7 +34,7 @@ const PersonModal = ({ person, isOpen, onClose }) => {
                 {/* <UpdatePersonPanel></UpdatePersonPanel> */}
               </TabPanel>
               <TabPanel>
-                {/* <MembershipPanel></MembershipPanel> */}
+                <MembershipPanel person={person}/>
               </TabPanel>
             </TabPanels>
           </Tabs>

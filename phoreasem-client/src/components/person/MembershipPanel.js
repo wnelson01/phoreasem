@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Stack, FormControl, Input, Table, Thead, Tr, Th, Tbody } from "@chakra-ui/react";
 import axios from "axios";
-import TeamRow from './MembershipRow';
+import MembershipRow from './MembershipRow';
 
 const MembershipPanel = ({ person }) => {
   const [memberships, setMemberships] = useState([]);
   const [membership, setMembership] = useState([]);
-  const loadTeams = async () => {
-      const response = await axios.get(`https://api.phoreasem.app/team?person={person.id}`);
-      setMemberships(response.data);
+  const loadMemberships = async () => {
+      const response = await axios.get(`https://api.phoreasem.app/membership?person=${person.name}`);
+      await setMemberships(response.data);
   }
   useEffect(() => {
-      loadTeams();
+      loadMemberships();
   }, [])
   return (
     <Stack>
@@ -25,7 +25,7 @@ const MembershipPanel = ({ person }) => {
               </Tr>
           </Thead>
           <Tbody>
-              {memberships.map((team, i) => <TeamRow team={team} loadTeams={loadTeams} key={i} />)}
+              {memberships.map((membership, i) => <MembershipRow membership={membership} loadMemberships={loadMemberships} key={i} />)}
           </Tbody>
       </Table>
     </Stack>
