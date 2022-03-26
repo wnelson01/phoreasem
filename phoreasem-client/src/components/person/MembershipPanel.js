@@ -12,13 +12,17 @@ const MembershipPanel = ({ person }) => {
   }
   useEffect(() => {
       loadMemberships();
-  }, [])
+  }, [memberships])
+
   const addMembership = async () => {
     const response = await axios.post('https://api.phoreasem.app/membership', {
       person: person.name,
       team: membership
     })
+    const newMemberships = [...memberships, response.data]
+    setMemberships(newMemberships)
   }
+
   return (
     <Stack>
       <FormControl>
@@ -34,7 +38,7 @@ const MembershipPanel = ({ person }) => {
               </Tr>
           </Thead>
           <Tbody>
-              {memberships.map((membership, i) => <MembershipRow membership={membership} loadMemberships={loadMemberships} key={i} />)}
+              {memberships.map((membership, i) => <MembershipRow membership={membership} memberships={memberships} setMemberships={setMemberships} key={i} />)}
           </Tbody>
       </Table>
     </Stack>
