@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Stack, FormControl, Input, Table, Thead, Tr, Th, Tbody } from "@chakra-ui/react";
+import { Stack, FormControl, Input, Table, Thead, Tr, Th, Tbody, Button, } from "@chakra-ui/react";
 import axios from "axios";
 import MembershipRow from './MembershipRow';
 
@@ -13,11 +13,20 @@ const MembershipPanel = ({ person }) => {
   useEffect(() => {
       loadMemberships();
   }, [])
+  const addMembership = async () => {
+    const response = await axios.post('https://api.phoreasem.app/membership', {
+      person: person.name,
+      team: membership
+    })
+  }
   return (
     <Stack>
       <FormControl>
         <Input placeholder="team" onChange={(e) => setMembership(e.target.value)} />
       </FormControl>
+      <Button type='submit' onClick={addMembership}>
+        add membership
+      </Button>
       <Table variant='striped' size='sm' id='teams'>
           <Thead>
               <Tr>
