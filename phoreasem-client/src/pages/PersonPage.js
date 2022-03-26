@@ -22,12 +22,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import PersonTable from '../components/person/PersonTable';
+import CreatePerson from '../components/person/CreatePerson';
 
 const PersonPage = () => {
   const [people, setPeople] = useState([]);
-  // const [teams, setTeams] = useState();
   const [filteredPeople, setFilteredPeople] = useState([]);
-  // const [personToEdit, setPersonToEdit] = useState({});
   const {
     isOpen,
     onOpen,
@@ -47,9 +46,6 @@ const PersonPage = () => {
     setFilteredPeople(people)
   }, [people]);
 
-  // const onEdit = (person) => {
-  //   setPersonToEdit(person);
-  // };
   return (
     <Container minW="container.sm" maxW="container.xl">
       <Heading p="2" as="h2" size="xl">
@@ -62,13 +58,13 @@ const PersonPage = () => {
         <Spacer />
         {/* <TableSearch rows={people} filteredRows={filteredPeople} setFilteredRows={setFilteredPeople} /> */}
       </Flex>
-      <PersonTable people={filteredPeople} loadPeople={loadPeople} />
+      <PersonTable people={filteredPeople} setPeople={setPeople} />
       <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create Person</ModalHeader>
           <ModalCloseButton></ModalCloseButton>
-          <ModalBody>{/* <CreatePerson /> */}</ModalBody>
+          <ModalBody><CreatePerson people={people} setPeople={setPeople} onClose={onClose} /></ModalBody>
           <ModalFooter />
         </ModalContent>
       </Modal>

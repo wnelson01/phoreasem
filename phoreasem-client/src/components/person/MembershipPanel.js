@@ -18,9 +18,9 @@ const MembershipPanel = ({ person }) => {
     const response = await axios.post('https://api.phoreasem.app/membership', {
       person: person.name,
       team: membership
-    })
-    const newMemberships = [...memberships, response.data]
-    setMemberships(newMemberships)
+    });
+    const newMemberships = [...memberships, response.data];
+    await setMemberships(newMemberships);
   }
 
   return (
