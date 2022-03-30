@@ -33,7 +33,7 @@ const MembershipPanel = ({ person }) => {
       team: membership,
     });
     const newMemberships = [...memberships, response.data];
-    await setMemberships(newMemberships);
+    setMemberships(newMemberships);
   };
 
   return (
