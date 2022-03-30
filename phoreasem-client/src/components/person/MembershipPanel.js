@@ -16,15 +16,16 @@ import MembershipRow from "./MembershipRow";
 const MembershipPanel = ({ person }) => {
   const [memberships, setMemberships] = useState([]);
   const [membership, setMembership] = useState([]);
-  const loadMemberships = async () => {
-    const response = await axios.get(
-      `https://api.phoreasem.app/membership?person=${person.name}`
-    );
-    await setMemberships(response.data);
-  };
+
   useEffect(() => {
+    const loadMemberships = async () => {
+      const response = await axios.get(
+        `https://api.phoreasem.app/membership?person=${person.name}`
+      );
+      setMemberships(response.data);
+    };
     loadMemberships();
-  }, [memberships]);
+  }, [memberships, person.name]);
 
   const addMembership = async () => {
     const response = await axios.post("https://api.phoreasem.app/membership", {

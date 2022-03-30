@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Editable,
   EditableInput,
-  EditableTExtarea,
   EditablePreview,
   Td,
   Text,
   Tr,
   useDisclosure,
   IconButton,
+  Input
 } from "@chakra-ui/react";
 import { ViewIcon, DeleteIcon } from "@chakra-ui/icons";
 import PersonModal from "./PersonModal";
@@ -16,21 +16,33 @@ import axios from "axios";
 
 const PersonRow = ({ person, people, setPeople }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const deletePerson = async () => {
     await axios.delete(`https://api.phoreasem.app/person/${person.id}`);
-    const newPeople = people.filter((per) => per.id != person.id);
+    const newPeople = people.filter((per) => per.id !== person.id);
     setPeople(newPeople);
   };
+
+  const changeName = async () => {
+    await axios.patch(`https://api.phoreasem.app/person/${person.id}`, {
+      name: newName});
+    person.name = newName;
+  }
+
+  const [newName, setNewName] = useState(person.name);
+
   return (
     <>
       <Tr>
         <Td>
-         <Text noOfLines={1}>{person.id}</Text>
+          <Text noOfLines={1}>{person.id}</Text>
         </Td>
         <Td>
-          <Editable defaultValue={person.name}>
+          <Editable defaultValue={person.name}
+            onSubmit={changeName}>
             <EditablePreview />
-            <EditableInput />
+            <Input as={EditableInput}
+              onChange={(e) => setNewName(e.target.value)}/>
           </Editable>
         </Td>
         <Td>
