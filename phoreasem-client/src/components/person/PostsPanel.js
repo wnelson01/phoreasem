@@ -12,9 +12,37 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import PostRow from "./MembershipRow";
-const PostsPanel = () => {
+const PostsPanel = ({ person }) => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const loadPosts = async () => {
+      const response = await axios.get(
+        `https://api.phoreasem.app/posts?person=${person.name}`
+      );
+      setPosts(response.data);
+    };
+    loadPosts();
+  }, [posts, person.name]);
   return (
-    <div>PostsPanel</div>
+    <Stack>
+      <Table variant='striped' size='sm' id='posts'>
+        <Thead>
+          <Tr>
+            <Th>Posts</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {posts.map((post, i) => {
+            <PostRow
+              post={post}
+              posts={posts}
+              setPosts={setPosts}
+              key={i}
+            />
+          })}
+        </Tbody>
+      </Table>
+    </Stack>
   )
 }
 

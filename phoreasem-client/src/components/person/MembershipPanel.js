@@ -23,18 +23,18 @@ const MembershipPanel = ({ person }) => {
         `https://api.phoreasem.app/membership?person=${person.name}`
       );
       setMemberships(response.data);
-    };
+    }
     loadMemberships();
-  }, [memberships, person.name]);
+  }, [setMemberships, person.name]);
 
-  const addMembership = async () => {
+  async function addMembership() {
     const response = await axios.post("https://api.phoreasem.app/membership", {
       person: person.name,
       team: membership,
     });
     const newMemberships = [...memberships, response.data];
     setMemberships(newMemberships);
-  };
+  }
 
   return (
     <Stack>
