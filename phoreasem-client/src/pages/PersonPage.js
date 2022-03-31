@@ -43,7 +43,7 @@ const PersonPage = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredPeople(people)
+    setFilteredPeople(people);
   }, [people]);
 
   return (

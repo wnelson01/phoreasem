@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import PostRow from "./MembershipRow";
+
 const PostsPanel = ({ person }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -22,7 +23,8 @@ const PostsPanel = ({ person }) => {
       setPosts(response.data);
     };
     loadPosts();
-  }, [posts, person.name]);
+  }, [person.name]);
+
   return (
     <Stack>
       <Table variant='striped' size='sm' id='posts'>

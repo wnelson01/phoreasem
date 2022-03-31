@@ -13,7 +13,7 @@ const PersonTable = ({ people, setPeople }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {people.map((person, i) => <PersonRow person={person} people={people} setPeople={setPeople} key={i} />)}
+        {people.map((person, i) => <PersonRow person={person} people={people} setPeople={setPeople} key={person.id} />)}
       </Tbody>
     </Table>
   )
