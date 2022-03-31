@@ -50,11 +50,11 @@ const MembershipPanel = ({ person }) => {
       <Table variant="striped" size="sm" id="teams">
         <Thead>
           <Tr>
-            <Th>Teams</Th>
+            <Th>team</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {memberships.map((membership, i) => (
+          {memberships.map((membership) => (
             <MembershipRow
               membership={membership}
               memberships={memberships}

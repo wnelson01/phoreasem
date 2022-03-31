@@ -31,11 +31,11 @@ const PostsPanel = ({ person }) => {
       <Table variant='striped' size='sm' id='posts'>
         <Thead>
           <Tr>
-            <Th>Posts</Th>
+            <Th>post</Th><Th>team</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {posts.map((post, i) => (
+          {posts.map((post) => (
             <PostRow
               post={post}
               posts={posts}
