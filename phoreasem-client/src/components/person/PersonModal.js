@@ -12,9 +12,9 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text
 } from "@chakra-ui/react";
 import MembershipPanel from './MembershipPanel';
+import PostPanel from './PostPanel';
 
 const PersonModal = ({ person, isOpen, onClose }) => {
   return (
@@ -31,7 +31,7 @@ const PersonModal = ({ person, isOpen, onClose }) => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {/* <UpdatePersonPanel></UpdatePersonPanel> */}
+                <PostPanel person={person}/>
               </TabPanel>
               <TabPanel>
                 <MembershipPanel person={person}/>

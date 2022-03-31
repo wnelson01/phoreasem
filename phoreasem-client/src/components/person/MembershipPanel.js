@@ -59,7 +59,7 @@ const MembershipPanel = ({ person }) => {
               membership={membership}
               memberships={memberships}
               setMemberships={setMemberships}
-              key={i}
+              key={membership.id}
             />
           ))}
         </Tbody>

@@ -5,10 +5,8 @@ import axios from 'axios';
 const MembershipRow = ({ membership, memberships, setMemberships }) => {
 
   const deleteMembership = async () => {
-    console.log({memberships})
     await axios.delete(`https://api.phoreasem.app/membership/${membership.id}`);
     const newMemberships = memberships.filter(mem => mem.id !== membership.id);
-    console.log({newMemberships});
     await setMemberships(newMemberships);
   }
 
