@@ -4,7 +4,6 @@ import {
   EditableInput,
   EditablePreview,
   Td,
-  Text,
   Tr,
   useDisclosure,
   IconButton,
