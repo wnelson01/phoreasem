@@ -4,7 +4,6 @@ import {
   Container,
   Flex,
   Heading,
-  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,25 +12,16 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import PersonTable from '../components/person/PersonTable';
-import CreatePerson from '../components/person/CreatePerson';
+import PersonTable from "../components/person/PersonTable";
+import CreatePerson from "../components/person/CreatePerson";
 
 const PersonPage = () => {
   const [people, setPeople] = useState([]);
   const [filteredPeople, setFilteredPeople] = useState([]);
-  const {
-    isOpen,
-    onOpen,
-    onClose,
-  } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const loadPeople = async () => {
     const response = await axios.get("https://api.phoreasem.app/person");
@@ -39,7 +29,7 @@ const PersonPage = () => {
   };
 
   useEffect(() => {
-    loadPeople()
+    loadPeople();
   }, []);
 
   useEffect(() => {
@@ -64,7 +54,13 @@ const PersonPage = () => {
         <ModalContent>
           <ModalHeader>Create Person</ModalHeader>
           <ModalCloseButton></ModalCloseButton>
-          <ModalBody><CreatePerson people={people} setPeople={setPeople} onClose={onClose} /></ModalBody>
+          <ModalBody>
+            <CreatePerson
+              people={people}
+              setPeople={setPeople}
+              onClose={onClose}
+            />
+          </ModalBody>
           <ModalFooter />
         </ModalContent>
       </Modal>

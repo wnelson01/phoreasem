@@ -1,23 +1,22 @@
 import React from "react";
 import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
-import PersonRow from "./PersonRow";
+import TeamRow from "./TeamRow";
 
-const PersonTable = ({ people, setPeople }) => {
+const TeamTable = ({ teams, setTeams }) => {
   return (
     <Table variant="striped" size="sm" id="users">
       <Thead>
         <Tr>
-          <Th>id</Th>
           <Th>name</Th>
         </Tr>
       </Thead>
       <Tbody>
-        {people.map((person) => (
-          <PersonRow
-            person={person}
-            people={people}
-            setPeople={setPeople}
-            key={person.id}
+        {teams.map((team) => (
+          <TeamRow
+            team={team}
+            teams={teams}
+            setTeams={setTeams}
+            key={team.id}
           />
         ))}
       </Tbody>
@@ -25,4 +24,4 @@ const PersonTable = ({ people, setPeople }) => {
   );
 };
 
-export default PersonTable;
+export default TeamTable;

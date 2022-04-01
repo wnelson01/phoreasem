@@ -42,7 +42,7 @@ const PersonRow = ({ person, people, setPeople }) => {
             onSubmit={changeName}>
             <EditablePreview />
             <Input as={EditableInput}
-              onChange={(e) => setNewName(e.target.value)}/>
+              onChange={e => setNewName(e.target.value)}/>
           </Editable>
         </Td>
         <Td>
