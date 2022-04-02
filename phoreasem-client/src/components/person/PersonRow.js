@@ -4,7 +4,6 @@ import {
   EditableInput,
   EditablePreview,
   Td,
-  Text,
   Tr,
   useDisclosure,
   IconButton,
@@ -34,9 +33,6 @@ const PersonRow = ({ person, people, setPeople }) => {
   return (
     <>
       <Tr>
-        <Td>
-          <Text noOfLines={1}>{person.id}</Text>
-        </Td>
         <Td>
           <Editable defaultValue={person.name}
             onSubmit={changeName}>

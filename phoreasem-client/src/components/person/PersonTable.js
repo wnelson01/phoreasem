@@ -16,20 +16,11 @@ const PersonTable = ({ people, setPeople }) => {
     <Table variant="striped" size="sm" id="users">
       <Thead>
         <Tr>
-          <Th>id</Th>
           <Th>name</Th>
-        </Tr>
-        <Tr>
           <Th>
             <Input
-              placeholder='filter by id' />
-          </Th>
-          <Th>
-            <Input 
-              placeholder='filter by name'
-              onChange={(e) => {
-                setPeopleFilter(searcher.search(e.target.value));
-              }}/>
+              placeholder='filter'
+              onChange={e => setPeopleFilter(searcher.search(e.target.value))}/>
           </Th>
         </Tr>
       </Thead>

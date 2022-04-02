@@ -20,7 +20,6 @@ import CreatePerson from "../components/person/CreatePerson";
 
 const PersonPage = () => {
   const [people, setPeople] = useState([]);
-  const [filteredPeople, setFilteredPeople] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const loadPeople = async () => {
@@ -32,10 +31,6 @@ const PersonPage = () => {
     loadPeople();
   }, []);
 
-  useEffect(() => {
-    setFilteredPeople(people);
-  }, [people]);
-
   return (
     <Container minW="container.sm" maxW="container.xl">
       <Heading p="2" as="h2" size="xl">
@@ -46,9 +41,8 @@ const PersonPage = () => {
           new person
         </Button>
         <Spacer />
-        {/* <TableSearch rows={people} filteredRows={filteredPeople} setFilteredRows={setFilteredPeople} /> */}
       </Flex>
-      <PersonTable people={filteredPeople} setPeople={setPeople} />
+      <PersonTable people={people} setPeople={setPeople} />
       <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

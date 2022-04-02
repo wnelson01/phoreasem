@@ -1,17 +1,31 @@
-import React from "react";
-import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Input, Table, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
 import TeamRow from "./TeamRow";
+import FuzzySearch from 'fuzzy-search';
 
 const TeamTable = ({ teams, setTeams }) => {
+  const [teamFilter, setTeamFilter] = useState([]);
+
+  const searcher = new FuzzySearch(teams, ['name']);
+
+  useEffect(() => {
+    setTeamFilter(teams)
+  }, [teams]);
+
   return (
     <Table variant="striped" size="sm" id="users">
       <Thead>
         <Tr>
           <Th>name</Th>
+          <Th>
+            <Input
+              placeholder='filter'
+              onChange={e => setTeamFilter(searcher.search(e.target.value))}/>
+          </Th>
         </Tr>
       </Thead>
       <Tbody>
-        {teams.map(team => 
+        {teamFilter.map(team => 
           <TeamRow
             team={team}
             teams={teams}

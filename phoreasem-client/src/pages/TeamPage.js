@@ -20,7 +20,6 @@ import CreateTeam from "../components/team/CreateTeam";
 
 const TeamPage = () => {
   const [teams, setTeams] = useState([]);
-  const [teamsFilter, setTeamsFilter] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const loadTeams = async () => {
@@ -32,10 +31,6 @@ const TeamPage = () => {
     loadTeams();
   }, []);
 
-  useEffect(() => {
-    setTeamsFilter(teams);
-  }, [teams]);
-
   return (
     <Container minW="container.lg.sm" maxW="container.lg.xl">
       <Heading p="2" as="h2" size="xl">
@@ -46,9 +41,8 @@ const TeamPage = () => {
           new team
         </Button>
         <Spacer />
-        {/* { <TableSearc /> } */}
       </Flex>
-      <TeamTable teams={teamsFilter} setTeams={setTeams} />
+      <TeamTable teams={teams} setTeams={setTeams} />
       <Modal size="4xl" isOpen = {isOpen} onClose = {onClose} >
         <ModalOverlay />
         <ModalContent>
