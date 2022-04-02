@@ -27,6 +27,21 @@ conn_params = {
 
 pool = mariadb.ConnectionPool(pool_name='pool', pool_size = 5, **conn_params)
 
+def get_connection():
+    try:
+        conn = pool.get_connection()
+    except:
+    # Instatiate Connection
+        conn = mariadb.connect(
+                user=os.environ.get('user'),
+                password = os.environ.get('password'),
+                host = os.environ.get('host'),
+                port = int(os.environ.get('port')),
+                database = os.environ.get('database')
+        )
+        pool.add_connection(conn)
+    return conn
+
 @app.route('/', methods=['GET'])
 def index():
     return "<h1 style='color:blue'>Phoreasem API</h1>"
@@ -34,7 +49,7 @@ def index():
 # create person
 @app.route('/person', methods=['POST'])
 def create_person():
-    conn = pool.get_connection()
+    conn = get_connection()
     content = request.get_json()
     name = content['name']
     cur = conn.cursor(dictionary=True)
@@ -54,7 +69,7 @@ def create_person():
 # get people
 @app.route('/person', methods=['GET'])
 def get_person():
-    conn = pool.get_connection()
+    conn = get_connection()
     args = request.args
     id = args.get('id')
     name = args.get('name')
@@ -76,7 +91,7 @@ def get_person():
 # update person
 @app.route('/person/<id>', methods=['PATCH'])
 def update_person(id):
-    conn = pool.get_connection()
+    conn = get_connection()
     content = request.get_json()
     name = content['name']
     cur = conn.cursor(dictionary = True)
@@ -92,7 +107,7 @@ def update_person(id):
 # delete person
 @app.route('/person/<id>', methods=['DELETE'])
 def delete_person(id):
-    conn = pool.get_connection()
+    conn = get_connection()
     cur = conn.cursor(dictionary = True)
     cur.execute('DELETE FROM membership WHERE person = ?', (id,))
     conn.commit()
@@ -107,7 +122,7 @@ def delete_person(id):
 # create team
 @app.route('/team', methods=['POST']) 
 def create_team():
-    conn = pool.get_connection()
+    conn = get_connection()
     content = request.get_json()
     name = content['name']
     cur = conn.cursor(dictionary = True)
@@ -127,7 +142,7 @@ def create_team():
 # get team
 @app.route('/team', methods=['GET'])
 def get_team():
-    conn = pool.get_connection()
+    conn = get_connection()
     args = request.args
     id = args.get('id')
     name = args.get('name')
@@ -149,7 +164,7 @@ def get_team():
 # update team
 @app.route('/team/<id>', methods=['PATCH'])
 def update_team(id):
-    conn = pool.get_connection()
+    conn = get_connection()
     content = request.get_json()
     name = content['name']
     cur = conn.cursor(dictionary = True)
@@ -165,7 +180,7 @@ def update_team(id):
 # delete team
 @app.route('/team/<id>', methods=['DELETE'])
 def delete_team(id):
-    conn = pool.get_connection()
+    conn = get_connection()
     cur = conn.cursor(dictionary = True)
     cur.execute('DELETE FROM membership WHERE team = ?', (id,))
     conn.commit()
@@ -180,7 +195,7 @@ def delete_team(id):
 # create membership
 @app.route('/membership', methods=['POST'])
 def create_membership():
-    conn = pool.get_connection()
+    conn = get_connection()
     content = request.get_json()
     team = content['team']
     person = content['person']
@@ -199,7 +214,7 @@ def create_membership():
 # get membership
 @app.route('/membership', methods=['GET'])
 def get_membership():
-    conn = pool.get_connection()
+    conn = get_connection()
     args = request.args
     id = args.get('id')
     team = args.get('team')
@@ -209,7 +224,7 @@ def get_membership():
         if id:
             cur.execute('SELECT m.id as id, t.name as team_name, p.name as person_name FROM membership m JOIN team t on m.team = t.id JOIN person p on m.person = p.id WHERE m.id = ?', (id,))
         elif team:
-            cur.execute('SELECT m.id as id, p.name as person FROM membership m JOIN person p ON m.person = p.id JOIN team t ON t.id = m.team WHERE t.name = ?', (team,))
+            cur.execute('SELECT m.id as id, t.name as team, p.name as person FROM membership m JOIN person p ON m.person = p.id JOIN team t ON t.id = m.team WHERE t.name = ?', (team,))
         elif person:
             cur.execute('SELECT m.id as id, p.name as person, t.name as team FROM membership m JOIN person p on m.person = p.id JOIN team t ON m.team = t.id WHERE p.name = ?', (person,))
         else:
@@ -224,7 +239,7 @@ def get_membership():
 # delete membership
 @app.route('/membership/<id>', methods=['DELETE'])
 def delete_membership(id):
-    conn = pool.get_connection()
+    conn = get_connection()
     cur = conn.cursor(dictionary = True)
     cur.execute('DELETE FROM membership WHERE id = ?', (id,))
     conn.commit()
@@ -234,7 +249,7 @@ def delete_membership(id):
 
 @app.route('/post', methods=['POST'])
 def create_post():
-    conn = pool.get_connection()
+    conn = get_connection()
     content = request.get_json()
     person = content['person']
     team = content['team']
@@ -258,7 +273,7 @@ def create_post():
 
 @app.route('/post', methods=['GET'])
 def get_post():
-    conn = pool.get_connection()
+    conn = get_connection()
     args = request.args
     team = args.get('team')
     person = args.get('person')
@@ -281,7 +296,7 @@ def get_post():
 
 @app.route('/post/<id>', methods=['DELETE'])
 def delete_post(id):
-    conn = pool.get_connection()
+    conn = get_connection()
     cur = conn.cursor(dictionary = True)
     cur.execute('DELETE FROM post WHERE id = ?', (id,))
     conn.commit()
