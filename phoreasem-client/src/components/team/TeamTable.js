@@ -11,14 +11,14 @@ const TeamTable = ({ teams, setTeams }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {teams.map((team) => (
+        {teams.map(team => 
           <TeamRow
             team={team}
             teams={teams}
             setTeams={setTeams}
             key={team.id}
           />
-        ))}
+        )}
       </Tbody>
     </Table>
   );
