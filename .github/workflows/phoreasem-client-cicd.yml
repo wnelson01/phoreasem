@@ -17,3 +17,5 @@ jobs:
             cd ~/projects/phoreasem/phoreasem-client
             git pull
             npm run build
+            cd ~/projects/phoreasem/phoreasem-api
+            mysqldump phoreasem > phoreasem.sql
