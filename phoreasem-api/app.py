@@ -299,6 +299,28 @@ def get_post():
     conn.close()
     return jsonify(rv)
 
+@app.route('/post/<id>', methods=['PATCH'])
+def update_post(id):
+    conn = get_connection()
+    body = request.get_json()
+    content = body['content']
+    person = body['person']
+    team = body['team']
+    cur = conn.cursor(dictionary = True)
+    cur.execute('UPDATE post SET content = ?, \
+            person = (SELECT pe.id FROM person pe WHERE pe.name = ?), \
+            team = (SELECT te.id FROM team te WHERE te.name = ?) \
+            WHERE id = ?', (content, person, team, id))
+    conn.commit()
+    rv = {
+            'content': content,
+            'person': person,
+            'team': team
+            }
+    cur.close()
+    conn.close()
+    return rv
+
 @app.route('/post/<id>', methods=['DELETE'])
 def delete_post(id):
     conn = get_connection()

@@ -79,7 +79,7 @@ CREATE TABLE `post` (
   `person` int(11) DEFAULT NULL,
   `team` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (4,'conquer yourself rather than the world',NULL,27,5),(7,'What I have achieved by industry and practice, anyone else with tolerable natural gift and ability can also achieve',NULL,11,8),(8,'The human mind is incapable of formulating (or mechanizing) all its mathematical intuitions, i.e., if it has succeeded in formulating some of them, this very fact yields new intuitive knowledge, e.g., the consistency of this formalism. This fact may be called the \"incompletability\" of mathematics. On the other hand, on the basis of what has been proved so far, it remains possible that there may exist (and even be empirically discoverable) a theorem proving machine which in fact is equivalent to mathematical intuition, but cannot be proved to be so, nor even be proved to yield nly correct theorems of finitary number theory',NULL,8,4),(10,'my work is a game, a very serious game',NULL,10,9);
+INSERT INTO `post` VALUES (4,'conquer yourself rather than the world',NULL,27,5),(7,'What I have achieved by industry and practice, anyone else with tolerable natural gift and ability can also achieve',NULL,11,8),(8,'The human mind is incapable of formulating (or mechanizing) all its mathematical intuitions, i.e., if it has succeeded in formulating some of them, this very fact yields new intuitive knowledge, e.g., the consistency of this formalism. This fact may be called the \"incompletability\" of mathematics. On the other hand, on the basis of what has been proved so far, it remains possible that there may exist (and even be empirically discoverable) a theorem proving machine which in fact is equivalent to mathematical intuition, but cannot be proved to be so, nor even be proved to yield nly correct theorems of finitary number theory',NULL,8,4),(10,'my work is a game, a very serious game',NULL,10,9),(11,'test',NULL,6,5);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,4 +150,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-02 20:32:20
+-- Dump completed on 2022-04-02 20:36:39
