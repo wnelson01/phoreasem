@@ -15,7 +15,7 @@ const CreatePerson = ({ people, setPeople, onClose }) => {
     const response = await axios.post("https://api.phoreasem.app/person", {
       name: personName,
     });
-    const newPeople = [...people, response.data];
+    const newPeople = [response.data, ...people];
     setPeople(newPeople);
     onClose();
   };
@@ -23,7 +23,7 @@ const CreatePerson = ({ people, setPeople, onClose }) => {
   return (
     <Stack>
       <FormControl>
-        <Input onChange={(e) => setPersonName(e.target.value)} />
+        <Input onChange={e => setPersonName(e.target.value)} />
         <FormHelperText>enter the name of the person</FormHelperText>
       </FormControl>
       <Button onClick={createPerson}>Create</Button>
