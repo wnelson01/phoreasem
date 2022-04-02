@@ -30,10 +30,10 @@ const MemberPanel = ({ team }) => {
   async function addMember() {
     const response = await axios.post("https://api.phoreasem.app/membership", {
       person: member,
-      team: team,
+      team: team.name,
     });
     const newMembers = [...members, response.data];
-    setMember(newMembers);
+    setMembers(newMembers);
   }
 
   return (
@@ -41,7 +41,7 @@ const MemberPanel = ({ team }) => {
       <FormControl>
         <Input
           placeholder="team"
-          onChange={(e) => setMembers(e.target.value)}
+          onChange={e => setMember(e.target.value)}
         />
       </FormControl>
       <Button type="submit" onClick={addMember}>
@@ -54,7 +54,7 @@ const MemberPanel = ({ team }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {members.map(i => (
+          {members.map(member => (
             <MemberRow
               member={member}
               members={members}

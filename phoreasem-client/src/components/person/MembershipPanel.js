@@ -41,7 +41,7 @@ const MembershipPanel = ({ person }) => {
       <FormControl>
         <Input
           placeholder="team"
-          onChange={(e) => setMembership(e.target.value)}
+          onChange={e => setMembership(e.target.value)}
         />
       </FormControl>
       <Button type="submit" onClick={addMembership}>
