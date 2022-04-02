@@ -279,8 +279,11 @@ def get_post():
     person = args.get('person')
     cur = conn.cursor(dictionary = True)
     if team:
-        cur.execute('SELECT po.id as post_id, po.content as post_content, pe.name as person_name FROM post po \
-                JOIN person pe ON po.person = pe.id WHERE po.team = ? OR po.team = (SELECT t.id FROM team t WHERE t.name = ?)', (team, team))
+        cur.execute('SELECT po.id as id, po.content as content, pe.name as person FROM post po \
+                JOIN person pe ON po.person = pe.id \
+                WHERE po.team = ? \
+                OR po.team = \
+                (SELECT t.id FROM team t WHERE t.name = ?)', (team, team))
     elif person:
         cur.execute('SELECT po.id as id, po.content as content, t.name as team FROM post po \
                 JOIN team t ON po.team = t.id \
@@ -288,7 +291,9 @@ def get_post():
                 OR po.person = \
                 (SELECT p.id FROM person p WHERE p.name = ?)', (person, person))
     else:
-        cur.execute('SELECT * FROM post')
+        cur.execute('SELECT po.id as id, po.content as content, pe.name as person, t.name as team FROM post po \
+                JOIN person pe ON po.person = pe.id \
+                JOIN team t ON po.team = t.id')
     rv = cur.fetchall()
     cur.close()
     conn.close()
