@@ -12,7 +12,9 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import axios from "axios";
 
 const PostRow = ({ post, posts, setPosts }) => {
-  const [newContent, setNewContent] = useState(post.content);
+  const [content, setContent] = useState(post.content);
+  const [person, setPerson] = useState(post.person);
+  const [team, setTeam] = useState(post.team);
 
   const deletePost = async () => {
     await axios.delete(`https://api.phoreasem.app/post/${post.id}`);
@@ -22,9 +24,11 @@ const PostRow = ({ post, posts, setPosts }) => {
 
   const editPost = async () => {
     await axios.patch(`https://api.phoreasem.app/post/${post.id}`, {
-      content: newContent
+      content: content,
+      person: person,
+      team: team,
     });
-    post.content = newContent;
+    post.content = content;
   }
   return (
     <>
@@ -34,7 +38,7 @@ const PostRow = ({ post, posts, setPosts }) => {
             onSubmit={editPost}>
             <EditablePreview />
             <Input as={EditableInput}
-              onChange={e => setNewContent(e.target.value)} />
+              onChange={e => setContent(e.target.value)} />
           </Editable>
         </Td>
         <Td>
@@ -42,7 +46,7 @@ const PostRow = ({ post, posts, setPosts }) => {
             onSubmit={editPost}>
             <EditablePreview />
             <Input as={EditableInput}
-              onChange={e => setNewContent(e.target.value)} />
+              onChange={e => setPerson(e.target.value)} />
           </Editable>
         </Td>
         <Td>
@@ -50,7 +54,7 @@ const PostRow = ({ post, posts, setPosts }) => {
             onSubmit={editPost}>
             <EditablePreview />
             <Input as={EditableInput}
-              onChange={e => setNewContent(e.target.value)} />
+              onChange={e => setTeam(e.target.value)} />
             </Editable>
         </Td>
         <Td>
